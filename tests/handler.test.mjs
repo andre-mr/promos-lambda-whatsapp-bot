@@ -1,5 +1,5 @@
 import { jest } from "@jest/globals";
-import { handler } from "../src/handler.mjs";
+import { handler } from "../src/index.mjs";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -26,6 +26,7 @@ jest.mock("@aws-sdk/lib-dynamodb", () => {
 const credentials = {
   accessKeyId: process.env.AMAZON_ACCESS_KEY_ID,
   secretAccessKey: process.env.AMAZON_SECRET_ACCESS_KEY,
+  apiKey: process.env.API_KEY,
 };
 
 // Simplified events for testing - only including what the handler actually uses

@@ -3,8 +3,14 @@ import { updateGroupsAndLinks } from "./database.mjs";
 export const handler = async (event) => {
   try {
     // API Key verification
-    const providedApiKey = event.headers?.["x-api-key"] || event.headers?.["X-Api-Key"];
+    let providedApiKey = "";
     const expectedApiKey = process.env.API_KEY;
+
+    if (event.credentials) {
+      providedApiKey = event.credentials.apiKey;
+    } else {
+      providedApiKey = event.headers?.["x-api-key"] || event.headers?.["X-Api-Key"];
+    }
 
     if (!expectedApiKey) {
       console.warn("API_KEY environment variable is not set");

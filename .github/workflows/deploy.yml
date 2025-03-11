@@ -28,6 +28,7 @@ jobs:
           AMAZON_SECRET_ACCESS_KEY: ${{ secrets.AMAZON_SECRET_ACCESS_KEY }}
           AMAZON_REGION: ${{ secrets.AMAZON_REGION }}
           AMAZON_DYNAMODB_TABLE: ${{ secrets.AMAZON_DYNAMODB_TABLE }}
+          API_KEY: ${{ secrets.API_KEY }}
 
       - name: Zip Lambda function
         run: |
