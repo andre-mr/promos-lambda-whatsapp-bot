@@ -68,13 +68,14 @@ export const updateGroups = async (groups) => {
       PK: "WHATSAPP#GROUP",
       SK: group.SK,
       Name: group.Name,
-      InviteCode: group.InviteCode,
+      InviteCode: group.InviteCode || "",
       TotalMembers: group.TotalMembers,
       Updated: timestamp,
     }));
 
   if (items.length === 0) {
-    throw new Error("No valid groups to update");
+    console.error("No valid groups to update");
+    return null;
   }
 
   const batchItems = {
@@ -102,7 +103,8 @@ export const updateInviteLinks = async (groups, domain = "DEFAULT") => {
   );
 
   if (validGroups.length === 0) {
-    throw new Error("No valid groups with invite codes");
+    console.error("No valid groups with invite codes");
+    return null;
   }
 
   const sortedGroups = validGroups.sort((a, b) => a.TotalMembers - b.TotalMembers);

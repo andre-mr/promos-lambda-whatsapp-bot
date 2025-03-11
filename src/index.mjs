@@ -71,7 +71,6 @@ export const handler = async (event) => {
       }),
     };
   } catch (error) {
-    console.error(error.message);
     return {
       statusCode: error.statusCode || 500,
       headers: {
