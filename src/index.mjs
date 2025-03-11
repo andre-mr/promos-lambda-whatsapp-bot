@@ -2,6 +2,26 @@ import { updateGroupsAndLinks } from "./database.mjs";
 
 export const handler = async (event) => {
   try {
+    // API Key verification
+    const providedApiKey = event.headers?.["x-api-key"] || event.headers?.["X-Api-Key"];
+    const expectedApiKey = process.env.API_KEY;
+
+    if (!expectedApiKey) {
+      console.warn("API_KEY environment variable is not set");
+    }
+
+    if (!providedApiKey || providedApiKey !== expectedApiKey) {
+      return {
+        statusCode: 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: "Unauthorized: Invalid or missing API key",
+        }),
+      };
+    }
+
     if (!event.body) {
       throw new Error("Missing request body");
     }
@@ -28,7 +48,7 @@ export const handler = async (event) => {
     } else {
       message = "Failed to update groups and invite links";
       statusCode = 500;
-      console.log(message);
+      console.error(message);
     }
 
     return {
@@ -45,7 +65,7 @@ export const handler = async (event) => {
       }),
     };
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     return {
       statusCode: error.statusCode || 500,
       headers: {
