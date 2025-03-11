@@ -64,10 +64,6 @@ export const handler = async (event) => {
       },
       body: JSON.stringify({
         message,
-        details: {
-          groupsSuccess,
-          linksSuccess,
-        },
       }),
     };
   } catch (error) {
