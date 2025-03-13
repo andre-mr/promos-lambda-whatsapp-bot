@@ -70,7 +70,7 @@ export const updateGroups = async (groups) => {
       Name: group.Name,
       InviteCode: group.InviteCode || "",
       TotalMembers: group.TotalMembers,
-      Updated: timestamp,
+      Updated: group.Updated || timestamp,
     }));
 
   if (items.length === 0) {
@@ -118,8 +118,8 @@ export const updateInviteLinks = async (groups, domain = "DEFAULT") => {
     selectedGroups = sortedGroups;
   }
 
-  // Format invite codes as "groupid:code"
-  const inviteCodes = selectedGroups.map((group) => `${group.SK}:${group.InviteCode}`);
+  // Format invite codes as "groupid:groupname:code"
+  const inviteCodes = selectedGroups.map((group) => `${group.SK}|${group.Name}|${group.InviteCode}`);
 
   const timestamp = new Date().toISOString();
   const item = {
