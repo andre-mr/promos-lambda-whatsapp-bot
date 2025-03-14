@@ -91,6 +91,8 @@ export const updateGroups = async (groups) => {
 };
 
 export const updateInviteLinks = async (groups, domain = "DEFAULT") => {
+  console.log("process.version:", process.version); // check aws lambda runtime
+
   const validGroups = groups.filter(
     (group) =>
       group.SK &&
